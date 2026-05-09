@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.2.0](https://github.com/minimum-hsu/tutorial-django-website/compare/v0.1.0...v0.2.0) (2026-05-09)
+
+
+### Features
+
+* introduce mypy and ruff check ([ea543ff](https://github.com/minimum-hsu/tutorial-django-website/commit/ea543ff6672c4f5049d1a8bd9f97e4b3687608e1))
+* update github action ([0ebaacc](https://github.com/minimum-hsu/tutorial-django-website/commit/0ebaacc6989b82178377a773ffe0854b8421e229))
+* update github action ([2595579](https://github.com/minimum-hsu/tutorial-django-website/commit/25955794d06378533161e33c677b63368b0487d7))
+
+
+### Bug Fixes
+
+* github action uv version ([869a9ca](https://github.com/minimum-hsu/tutorial-django-website/commit/869a9ca1a152b36ebeafe901b3c0e3dc80ad3315))
+
 ## 0.1.0 (2026-05-09)
 
 
