@@ -76,3 +76,36 @@ To simulate or run the project in a production-like environment (with Nginx, Gun
     ```bash
     docker compose down
     ```
+
+## Automated Production Deployment (CI/CD)
+
+For automated production deployments, this project uses GitHub Actions with a **Self-Hosted Runner**.
+
+1.  **Workflows**:
+    *   `.github/workflows/docker-publish.yml`: Automatically builds the Docker image and pushes it to GHCR. `main` pushes get the `latest` tag, while git tags (e.g. `v1.0.0`) get tagged with the same exact version name.
+    *   `.github/workflows/deploy.yml`: A manual-trigger workflow. Since Environment Required Reviewers for *Private* repositories is a GitHub Enterprise feature, deployment is safeguarded by requiring you to manually trigger it. Go to the **Actions** tab on GitHub, select **Deploy to Production**, click **Run workflow**, and specify the tag you want deployed.
+
+2.  **Infrastructure (`docker-compose.prod.yml`)**:
+    The production compose file differs from local development by downloading the predefined `IMAGE_NAME` from GHCR instead of building it from source locally.
+
+3.  **GitHub Project Settings Configuration**:
+    Before running the deployment, you must configure the following settings in your GitHub repository:
+
+    *   **Configure a Self-Hosted Runner**:
+        To securely deploy directly to your production server, set up a self-hosted runner:
+        1. Go to your repository **Settings** > **Actions** > **Runners**.
+        2. Click **New self-hosted runner** and choose your server's Operating System and Architecture.
+        3. SSH into your production server and follow the provided command-line instructions to download and configure the runner application.
+        4. Install the runner as a background service (Linux example: `sudo ./svc.sh install` then `sudo ./svc.sh start`) so it automatically starts on boot.
+
+    *   **Configure an Environment**:
+        1. Navigate to **Settings** > **Environments** and click **New environment**.
+        2. Name it `production`.
+        3. *(Note: If your repository is Public or you are using GitHub Enterprise, you can enable **Required reviewers** here to add an approval gate).*
+
+    *   **Configure Secret Variables**:
+        Navigate to **Settings** > **Secrets and variables** > **Actions**. You should add these secrets under **Environment secrets** (for the `production` environment) to keep them securely isolated, or under **Repository secrets**. Add the following keys:
+        *   `SECRET_KEY`: Your secure Django secret key.
+        *   `POSTGRES_DB`: Your production database name.
+        *   `POSTGRES_USER`: Your production database user.
+        *   `POSTGRES_PASSWORD`: Your secure database password.

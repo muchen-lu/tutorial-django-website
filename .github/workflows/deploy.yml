@@ -1,0 +1,52 @@
+name: Deploy to Production
+
+on:
+  # Deploy manually since private repos require GitHub Enterprise for Environment Required Reviewers
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Image tag to deploy (e.g. v1.0.0)'
+        required: true
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    # Environment tracking (will not block without Enterprise)
+    environment: production
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Determine Image Tag
+        id: get_tag
+        run: |
+          echo "DEPLOY_TAG=${{ github.event.inputs.tag }}" >> $GITHUB_ENV
+
+      - name: Deploy application with Docker Compose
+        env:
+          # Use the exact deployed tag
+          IMAGE_NAME: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.DEPLOY_TAG }}
+          # Fetch secure values from GitHub Actions Secrets
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          ALLOWED_HOSTS: "*"
+        run: |
+          # Pull the target images from GHCR
+          docker compose -f docker-compose.prod.yml pull
+
+          # Start or update the services in detached mode
+          docker compose -f docker-compose.prod.yml up -d
