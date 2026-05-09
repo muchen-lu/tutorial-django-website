@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head><title>Welcome</title></head>
+<body>
+    <h2>Welcome! You are logged in.</h2>
+    <button onclick="logout()">Logout</button>
+    <script>
+    if(!localStorage.getItem('access_token')) {
+        window.location.href = '/accounts/login/';
+    }
+    function logout() {
+        localStorage.removeItem('access_token');
+        window.location.href = '/accounts/login/';
+    }
+    </script>
+</body>
+</html>

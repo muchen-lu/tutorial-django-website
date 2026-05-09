@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head><title>Register</title></head>
+<body>
+    <h2>Register</h2>
+    <form id="registerForm">
+        <label>Email: <input type="email" id="email" required></label><br>
+        <label>Username: <input type="text" id="username" required></label><br>
+        <label>Password: <input type="password" id="password" required></label><br>
+        <button type="submit">Register</button>
+    </form>
+    <p><a href="/accounts/login/">Go to Login</a></p>
+    <script>
+    document.getElementById('registerForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        fetch('/accounts/api/register/', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                email: document.getElementById('email').value,
+                username: document.getElementById('username').value,
+                password: document.getElementById('password').value
+            })
+        }).then(res => res.ok ? window.location.href='/accounts/login/' : alert('Register failed'));
+    });
+    </script>
+</body>
+</html>
