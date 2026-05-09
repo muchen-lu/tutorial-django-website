@@ -13,6 +13,7 @@ This project is built using the following modern tech stack:
 *   **WSGI Server**: [Gunicorn](https://gunicorn.org/)
 *   **Reverse Proxy / Web Server**: [Nginx](https://nginx.org/)
 *   **Containerization**: [Docker](https://www.docker.com/) & Docker Compose
+*   **Code Quality & Linting**: [Ruff](https://docs.astral.sh/ruff/) (Linting/Formatting) and [Mypy](https://mypy.readthedocs.io/) (Static Type Checking)
 
 ## Development Setup
 
@@ -77,13 +78,16 @@ To simulate or run the project in a production-like environment (with Nginx, Gun
     docker compose down
     ```
 
-## Automated Production Deployment (CI/CD)
+## Automated CI/CD Pipeline
 
-For automated production deployments, this project uses GitHub Actions with a **Self-Hosted Runner**.
+This project employs a fully automated Continuous Integration and Continuous Deployment (CI/CD) pipeline via GitHub Actions using a consolidated `main.yml` workflow.
 
 1.  **Workflows**:
-    *   `.github/workflows/docker-publish.yml`: Automatically builds the Docker image and pushes it to GHCR. `main` pushes get the `latest` tag, while git tags (e.g. `v1.0.0`) get tagged with the same exact version name.
-    *   `.github/workflows/deploy.yml`: A manual-trigger workflow. Since Environment Required Reviewers for *Private* repositories is a GitHub Enterprise feature, deployment is safeguarded by requiring you to manually trigger it. Go to the **Actions** tab on GitHub, select **Deploy to Production**, click **Run workflow**, and specify the tag you want deployed.
+    *   `.github/workflows/main.yml`: Triggered on Push to `main` and Pull Requests. It executes three key phases sequentially:
+        1.  **Lint & Type Check**: Validates the code using **Ruff** and **Mypy**. These tools are configured to output results directly into the GitHub UI. Any syntax or typing errors encountered in a Pull Request will be displayed as inline annotations (comments) alongside your code changes.
+        2.  **Release Please (Automated Semantic Release)**: Using Google's `release-please-action`, this step analyzes your "Conventional Commits" on the `main` branch. It automatically opens a PR to update the `CHANGELOG.md`. Once that PR is merged, it bumps the version and automatically creates a new GitHub Release and Tag.
+        3.  **Build and Push Docker Image**: If linting passes, this step securely logs into GHCR and builds the production Docker image. Direct pushes to `main` are tagged as `latest`. If `release-please` just created a new Tag (e.g. `v1.0.0`), the Docker image is automatically tagged with that specific version.
+    *   `.github/workflows/deploy.yml`: A manual-trigger workflow. Since Environment Required Reviewers for *Private* repositories is a GitHub Enterprise feature, deployment to the production server is safeguarded by requiring you to manually trigger it. Go to the **Actions** tab on GitHub, select **Deploy to Production**, click **Run workflow**, and specify the precise Tag you want shipped.
 
 2.  **Infrastructure (`docker-compose.prod.yml`)**:
     The production compose file differs from local development by downloading the predefined `IMAGE_NAME` from GHCR instead of building it from source locally.

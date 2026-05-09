@@ -11,3 +11,27 @@ dependencies = [
     "gunicorn>=21.2.0",
     "psycopg2-binary>=2.9.9",
 ]
+
+[dependency-groups]
+dev = [
+    "django-stubs>=6.0.3",
+    "djangorestframework-stubs>=3.16.9",
+    "mypy==1.15.0",
+    "ruff>=0.15.12",
+]
+
+[tool.mypy]
+plugins = ["mypy_django_plugin.main", "mypy_drf_plugin.main"]
+strict = false
+ignore_missing_imports = true
+
+[tool.django-stubs]
+django_settings_module = "myproject.settings"
+
+[tool.ruff]
+line-length = 100
+exclude = ["migrations"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I"] # Error, pyflakes, Input (isort)
+ignore = []

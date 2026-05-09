@@ -1,8 +1,8 @@
-from rest_framework import generics, permissions
-from rest_framework.response import Response
-from .serializers import RegisterSerializer
-from django.shortcuts import render
 from django.contrib.auth import get_user_model
+from django.shortcuts import render
+from rest_framework import generics, permissions
+
+from .serializers import RegisterSerializer
 
 User = get_user_model()
 
