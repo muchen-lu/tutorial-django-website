@@ -1,4 +1,5 @@
-ub.lock
+uv.lock
+postgres_data/*
 
 # Created by https://www.toptal.com/developers/gitignore/api/git,vim,node,test,venv,yarn,basic,cmake,emacs,flask,linux,macos,maven,pydev,xcode,xmake,backup,django,dotenv,pulumi,puppet,python,ansible,doxygen,gitbook,phpunit,windows,terraform,docusaurus,powershell,virtualenv,pycharm+all,spreadsheet,visualstudiocode,database
 # Edit at https://www.toptal.com/developers/gitignore?templates=git,vim,node,test,venv,yarn,basic,cmake,emacs,flask,linux,macos,maven,pydev,xcode,xmake,backup,django,dotenv,pulumi,puppet,python,ansible,doxygen,gitbook,phpunit,windows,terraform,docusaurus,powershell,virtualenv,pycharm+all,spreadsheet,visualstudiocode,database
