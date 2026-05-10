@@ -31,7 +31,7 @@ jobs:
 
       - name: Determine Image Tag
         id: get_tag
-        shell: bash
+        shell: pwsh
         run: |
           echo "tag=${{ github.event.inputs.tag }}" >> "$GITHUB_OUTPUT"
 
