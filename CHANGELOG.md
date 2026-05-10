@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.4](https://github.com/muchen-lu/tutorial-django-website/compare/v0.4.3...v0.4.4) (2026-05-10)
+
+
+### Bug Fixes
+
+* Use GitHub event inputs for image tag in deployment ([a4ef606](https://github.com/muchen-lu/tutorial-django-website/commit/a4ef606af006620956932dc88cbc9fbfeada8bfe))
+
 ## [0.4.3](https://github.com/muchen-lu/tutorial-django-website/compare/v0.4.2...v0.4.3) (2026-05-10)
 
 
