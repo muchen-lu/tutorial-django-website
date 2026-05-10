@@ -38,7 +38,7 @@ jobs:
       - name: Deploy application with Docker Compose
         env:
           # Use the exact deployed tag
-          IMAGE_NAME: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.get_tag.outputs.tag }}
+          IMAGE_NAME: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.event.inputs.tag }}
           # Fetch secure values from GitHub Actions Secrets
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
           POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
