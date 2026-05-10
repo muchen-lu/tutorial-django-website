@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.2](https://github.com/muchen-lu/tutorial-django-website/compare/v0.4.1...v0.4.2) (2026-05-10)
+
+
+### Bug Fixes
+
+* Switch shell to PowerShell in deploy workflow ([d3119ee](https://github.com/muchen-lu/tutorial-django-website/commit/d3119ee3e3747d65dddeade7c62c9693d14a2070))
+
 ## [0.4.1](https://github.com/muchen-lu/tutorial-django-website/compare/v0.4.0...v0.4.1) (2026-05-10)
 
 
