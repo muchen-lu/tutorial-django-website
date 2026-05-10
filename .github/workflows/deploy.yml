@@ -31,9 +31,9 @@ jobs:
 
       - name: Determine Image Tag
         id: get_tag
-        shell: pwsh
+        shell: powershell
         run: |
-          echo "tag=${{ github.event.inputs.tag }}" >> "$GITHUB_OUTPUT"
+          echo "tag=${{ github.event.inputs.tag }}" >> $GITHUB_OUTPUT
 
       - name: Deploy application with Docker Compose
         env:
