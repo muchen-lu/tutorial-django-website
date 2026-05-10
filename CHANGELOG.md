@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.3](https://github.com/muchen-lu/tutorial-django-website/compare/v0.4.2...v0.4.3) (2026-05-10)
+
+
+### Bug Fixes
+
+* Update deploy.yml ([9c99083](https://github.com/muchen-lu/tutorial-django-website/commit/9c99083ab6e3f6a41f0652405e9cd939ecc8510f))
+
 ## [0.4.2](https://github.com/muchen-lu/tutorial-django-website/compare/v0.4.1...v0.4.2) (2026-05-10)
 
 
