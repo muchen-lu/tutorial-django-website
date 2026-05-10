@@ -1,6 +1,6 @@
 [project]
 name = "tutorial-django-website"
-version = "0.4.3"
+version = "0.4.4"
 description = "A tutorial Django website project."
 readme = "README.md"
 requires-python = ">=3.10"
